@@ -112,7 +112,7 @@ pipeline {
             steps {
                 script {
                     // Use Jenkins Credentials (Username + PAT) for Docker login
-                    withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', 
+                    withCredentials([usernamePassword(credentialsId: 'docker', 
                                                       usernameVariable: 'DOCKER_USER', 
                                                       passwordVariable: 'DOCKER_PASS')]) {
                         sh """
