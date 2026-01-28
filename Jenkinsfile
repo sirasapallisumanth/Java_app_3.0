@@ -22,7 +22,7 @@ pipeline {
         string(
             name: 'DockerHubUser', 
             description: "DockerHub username", 
-            defaultValue: 'praveensingam1994'
+            defaultValue: 'sumanthsirasapalli'
         )
     }
 
@@ -34,7 +34,7 @@ pipeline {
                 script {
                     gitCheckout(
                         branch: "main",
-                        url: "https://github.com/praveen1994dec/Java_app_3.0.git"
+                        url: "https://github.com/sirasapallisumanth/Java_app_3.0.git"
                     )
                 }
             }
