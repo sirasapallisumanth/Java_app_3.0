@@ -111,7 +111,17 @@ pipeline {
             when { expression { params.action == 'create' } }
             steps {
                 script {
-                    dockerImagePush(params.ImageName, params.ImageTag, params.DockerHubUser)
+                    // Use Jenkins Credentials (Username + PAT) for Docker login
+                    withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', 
+                                                      usernameVariable: 'DOCKER_USER', 
+                                                      passwordVariable: 'DOCKER_PASS')]) {
+                        sh """
+                        echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+                        docker tag ${params.ImageName}:${params.ImageTag} ${params.DockerHubUser}/${params.ImageName}:${params.ImageTag}
+                        docker push ${params.DockerHubUser}/${params.ImageName}:${params.ImageTag}
+                        docker logout
+                        """
+                    }
                 }
             }
         }
